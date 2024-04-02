@@ -21,7 +21,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.fiap.tiulanchespedido.adapter.controller.PedidoController;
 import br.com.fiap.tiulanchespedido.adapter.repository.pedido.PedidoDto;
-import br.com.fiap.tiulanchespedido.core.enums.Pago;
 import br.com.fiap.tiulanchespedido.core.enums.StatusPedido;
 import br.com.fiap.tiulanchespedido.infra.swagger.PedidoResponseSwagger;
 import io.swagger.v3.oas.annotations.Operation;
@@ -57,20 +56,17 @@ public class PedidoApi {
 		return ResponseEntity.ok(page);
 	}	
 
-	@GetMapping(value = "/status/{status}/pago/{pago}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Lista todos os pedidos por status e status de pagamento", description = "Lista não paginada dos pedidos por status e status de pagamento", tags = {"Pedido"})
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso, lista todos os pedidos por status e status de pagamento sem paginação")
 	})			
-	public List<PedidoDto> consultarByStatusPago(@ParameterObject @PathVariable @NotNull
-			                                     @Schema(implementation = StatusPedido.class, description = "Status Pedido", example = "RECEBIDO", required = true)
-			                                     StatusPedido status,
-			                                     @PathVariable @NotNull
-			                                     @Schema(implementation = Pago.class, description = "Pedido pago", example = "SIM", required = true)
-			                                     Pago pago){
-		logger.info("Consultar pedidos pelo status: " + status.toString() + " e pago: " + pago.toString());
+	public List<PedidoDto> consultarByStatus(@ParameterObject @PathVariable @NotNull
+			                                 @Schema(implementation = StatusPedido.class, description = "Status Pedido", example = "RECEBIDO", required = true)
+			                                 StatusPedido status){
+		logger.info("Consultar pedidos pelo status: " + status.toString());
 		
-		return pedidoController.consultaByStatusPago(status, pago);
+		return pedidoController.consultaByStatus(status);
 	}	
 	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

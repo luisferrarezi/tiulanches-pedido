@@ -17,7 +17,6 @@ import br.com.fiap.tiulanchespedido.core.entitie.cliente.Cliente;
 import br.com.fiap.tiulanchespedido.core.entitie.pedido.ItemPedido;
 import br.com.fiap.tiulanchespedido.core.entitie.pedido.Pedido;
 import br.com.fiap.tiulanchespedido.core.entitie.produto.Produto;
-import br.com.fiap.tiulanchespedido.core.enums.Pago;
 import br.com.fiap.tiulanchespedido.core.enums.StatusPedido;
 import br.com.fiap.tiulanchespedido.core.exception.BusinessException;
 import br.com.fiap.tiulanchespedido.adapter.repository.cliente.ClienteRepository;
@@ -41,8 +40,8 @@ public class PedidoService implements PedidoController {
 		return pedidoRepository.findAll(paginacao).map(PedidoDto::new);
 	}
 
-	public List<PedidoDto> consultaByStatusPago(StatusPedido status, Pago pago){
-		List<Pedido> listPedido = pedidoRepository.findByStatusPago(status, pago);
+	public List<PedidoDto> consultaByStatus(StatusPedido status){
+		List<Pedido> listPedido = pedidoRepository.findByStatus(status);
 		
 		return listPedido.stream().map(pedido -> new PedidoDto(pedido)).collect(Collectors.toList());
 	}	
