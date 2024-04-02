@@ -14,12 +14,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.fiap.tiulanchespedido.adapter.repository.pedido.PedidoDto;
 import br.com.fiap.tiulanchespedido.adapter.controller.PedidoController;
 import br.com.fiap.tiulanchespedido.core.entitie.cliente.Cliente;
+import br.com.fiap.tiulanchespedido.core.entitie.painelpedido.PainelPedido;
 import br.com.fiap.tiulanchespedido.core.entitie.pedido.ItemPedido;
 import br.com.fiap.tiulanchespedido.core.entitie.pedido.Pedido;
 import br.com.fiap.tiulanchespedido.core.entitie.produto.Produto;
 import br.com.fiap.tiulanchespedido.core.enums.StatusPedido;
 import br.com.fiap.tiulanchespedido.core.exception.BusinessException;
 import br.com.fiap.tiulanchespedido.adapter.repository.cliente.ClienteRepository;
+import br.com.fiap.tiulanchespedido.adapter.repository.painelpedido.PainelPedidoDto;
+import br.com.fiap.tiulanchespedido.adapter.repository.painelpedido.PainelPedidoRepository;
 import br.com.fiap.tiulanchespedido.adapter.repository.pedido.PedidoRepository;
 import br.com.fiap.tiulanchespedido.adapter.repository.produto.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,11 +32,14 @@ public class PedidoService implements PedidoController {
 	private final PedidoRepository pedidoRepository;
 	private final ProdutoRepository produtoRepository;
 	private final ClienteRepository clienteRepository;
+	private final PainelPedidoRepository painelPedidoRepository;
 	
-	public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, ClienteRepository clienteRepository) {
+	public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, 
+						 ClienteRepository clienteRepository, PainelPedidoRepository painelPedidoRepository) {
 		this.clienteRepository = clienteRepository;
 		this.pedidoRepository = pedidoRepository;
 		this.produtoRepository = produtoRepository;
+		this.painelPedidoRepository = painelPedidoRepository;
 	}
 	
 	public Page<PedidoDto> consultaPaginada(Pageable paginacao){
@@ -81,4 +87,18 @@ public class PedidoService implements PedidoController {
 		
 		return new PedidoDto(pedido);
 	}
+
+	public List<PainelPedidoDto> consultaPainelPedido() {
+		try {
+			List<PainelPedido> listPainelPedido = painelPedidoRepository.consultaPainelPedido(StatusPedido.RECEBIDO.ordinal(), 
+				 																	      	  StatusPedido.PREPARACAO.ordinal(), 
+				 														      	  			  StatusPedido.PRONTO.ordinal());
+		
+			return listPainelPedido.stream().map(painelPedido -> new PainelPedidoDto(painelPedido)).collect(Collectors.toList());
+		}
+		catch(Exception e) {
+			throw new EntityNotFoundException();		
+			
+		} 
+	}	
 }
