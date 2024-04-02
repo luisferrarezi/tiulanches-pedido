@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.fiap.tiulanchespedido.adapter.controller.PedidoController;
+import br.com.fiap.tiulanchespedido.adapter.repository.painelpedido.PainelPedidoDto;
 import br.com.fiap.tiulanchespedido.adapter.repository.pedido.PedidoDto;
 import br.com.fiap.tiulanchespedido.core.enums.StatusPedido;
 import br.com.fiap.tiulanchespedido.infra.swagger.PedidoResponseSwagger;
@@ -42,7 +43,19 @@ public class PedidoApi {
 	};
 	
 	private static Logger logger = LoggerFactory.getLogger(PedidoApi.class);
-	
+
+	@GetMapping(value = "/painel", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Operation(summary = "Lista os pedidos com status Recebidos, Em Preparação e Prontos", description = "Lista não paginada os pedidos com status Recebidos, Em Preparação e Prontos", tags = {"Painel Pedido"})
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Sucesso, lista os pedidos com status Recebidos, Em Preparação e Prontos sem paginação"),
+			@ApiResponse(responseCode = "404", description = "Falha, pedido não encontrado", content=@Content(schema = @Schema(hidden = true)))
+	})			
+	public List<PainelPedidoDto> consultarPainelPedidos(){
+		logger.info("Consultar pedidos para o painel de pedidos");
+		
+		return pedidoController.consultaPainelPedido();
+	}		
+
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "Lista todos os pedidos", description = "Retorno paginado, padrão de 10 registros por página", tags = {"Pedido"})
 	@ApiResponses(value = {
