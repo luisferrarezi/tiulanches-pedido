@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import br.com.fiap.tiulanchespedido.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanchespedido.adapter.repository.pedido.PedidoDto;
 import br.com.fiap.tiulanchespedido.core.entitie.cliente.Cliente;
-import br.com.fiap.tiulanchespedido.core.entitie.pagamento.Pagamento;
-import br.com.fiap.tiulanchespedido.core.enums.Pago;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +20,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -48,13 +45,6 @@ public class Pedido {
 	@JoinColumn(name="cpf")
 	@Schema(description = "Cliente caso ele queira se identificar")	
 	private Cliente cliente;
-	
-	@Getter
-	@Setter	
-	@OneToOne(cascade= CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn(name="id_pagamento", nullable = false)
-	@Schema(description = "Pagamento do pedido")	
-	private Pagamento pagamento;
 	
 	@Getter	
 	@NotNull
