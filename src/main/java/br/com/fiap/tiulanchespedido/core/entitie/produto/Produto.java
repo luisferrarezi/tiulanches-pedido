@@ -29,16 +29,15 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "idProduto")
 public class Produto {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Schema(description = "Código do produto após ser criado", example = "1", required = true)
+	@Schema(description = "Código do produto após ser criado", example = "1")
 	private long idProduto;
 	
 	@Enumerated(EnumType.ORDINAL)
-	@Schema(implementation = Categoria.class, description = "Categoria do produto", example = "LANCHE", required = true)	
+	@Schema(implementation = Categoria.class, description = "Categoria do produto", example = "LANCHE")	
 	private Categoria categoria;
 	
 	@Size(max=30)
-	@Schema(description = "Nome do produto", example = "X-Tudo", required = true, maxLength = 30)	
+	@Schema(description = "Nome do produto", example = "X-Tudo", maxLength = 30)	
 	private String nome;
 	
 	@Size(max=200)
@@ -50,7 +49,7 @@ public class Produto {
 	
 	@NotNull
 	@Positive
-	@Schema(description = "Preço do produto", example = "19.32", required = true)	
+	@Schema(description = "Preço do produto", example = "19.32")	
 	private BigDecimal preco;
 	
 	@Schema(description = "Tempo em minutos necessário para preparar todo o produto.", example = "35")
