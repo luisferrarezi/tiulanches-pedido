@@ -6,18 +6,16 @@ import br.com.fiap.tiulanchespedido.core.entitie.produto.Produto;
 import br.com.fiap.tiulanchespedido.core.enums.Categoria;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record ProdutoDto(@Schema(description = "Código do produto após ser criado", example = "1", required = true)
+public record ProdutoDto(@Schema(description = "Código do produto após ser criado", example = "1")
 						 long idProduto,
-						 @Schema(implementation = Categoria.class, description = "Categoria do produto", example = "LANCHE", required = true)
+						 @Schema(implementation = Categoria.class, description = "Categoria do produto", example = "LANCHE")
 						 Categoria categoria,
-						 @Schema(description = "Nome do produto", example = "X-Tudo", required = true, maxLength = 30)
+						 @Schema(description = "Nome do produto", example = "X-Tudo", maxLength = 30)
 						 String nome,
 						 @Schema(description = "Descrição do produto", 
-						         example = "pão, 2 carnes, queijo, presunto, bacon, ovo, alface, tomate, milho e batata.", 
-						         required = true, 
-						         maxLength = 200)
+						         example = "pão, 2 carnes, queijo, presunto, bacon, ovo, alface, tomate, milho e batata.", maxLength = 200)
 						 String descricao,
-						 @Schema(description = "Preço do produto", example = "19.32", required = true)
+						 @Schema(description = "Preço do produto", example = "19.32")
 						 BigDecimal preco,
 						 @Schema(description = "Tempo em minutos necessário para preparar todo o produto.", example = "35")
 						 int tempoPreparo,

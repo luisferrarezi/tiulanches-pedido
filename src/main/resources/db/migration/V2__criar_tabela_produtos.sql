@@ -1,5 +1,5 @@
 CREATE TABLE tlpedidos.produtos(
-	id_produto bigint(20) NOT NULL AUTO_INCREMENT,
+	id_produto bigint(20) NOT NULL,
 	categoria tinyint NOT NULL,
 	nome varchar(30) NOT NULL,
 	descricao varchar(200) NOT NULL,
