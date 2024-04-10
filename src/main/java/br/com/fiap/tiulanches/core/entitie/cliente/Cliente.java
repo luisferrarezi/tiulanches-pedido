@@ -1,5 +1,6 @@
 package br.com.fiap.tiulanches.core.entitie.cliente;
 
+import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanches.core.enums.Logado;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
@@ -42,4 +43,16 @@ public class Cliente {
 	public boolean isLogado(){
 		return this.logado == Logado.SIM;
 	}
+
+	public void cadastrar(ClienteDto clienteDto) {
+		this.cpf 	= clienteDto.cpf();
+		this.email 	= clienteDto.email();
+		this.nome 	= clienteDto.nome();
+		this.logado = Logado.NAO;		
+	}		
+
+	public void atualizar(ClienteDto clienteDto) {
+		this.email 	= clienteDto.email();
+		this.nome 	= clienteDto.nome();
+	}				
 }

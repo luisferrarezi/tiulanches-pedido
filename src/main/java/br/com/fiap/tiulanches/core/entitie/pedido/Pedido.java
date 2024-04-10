@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanches.adapter.repository.pedido.PedidoDto;
 import br.com.fiap.tiulanches.core.entitie.cliente.Cliente;
+import br.com.fiap.tiulanches.core.enums.Logado;
 import br.com.fiap.tiulanches.core.enums.StatusPedido;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class Pedido {
 	
 	private void validaCliente(ClienteDto dto) {		
 		if (dto != null) {
-			this.cliente = new Cliente(dto.cpf(), dto.nome(), dto.email(), dto.logado());
+			this.cliente = new Cliente(dto.cpf(), dto.nome(), dto.email(), Logado.NAO);
 		}
 	}
 }

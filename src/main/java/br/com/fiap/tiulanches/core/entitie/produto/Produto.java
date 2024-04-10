@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -42,10 +40,7 @@ public class Produto {
 	private String nome;
 	
 	@Size(max=200)
-	@Schema(description = "Descrição do produto", 
-    		example = "pão, 2 carnes, queijo, presunto, bacon, ovo, alface, tomate, milho e batata.", 
-    		required = true, 
-    		maxLength = 200)	
+	@Schema(description = "Descrição do produto", example = "pão, 2 carnes, queijo, presunto, bacon, ovo, alface, tomate, milho e batata.", maxLength = 200)	
 	private String descricao;
 	
 	@NotNull
@@ -71,4 +66,13 @@ public class Produto {
 		this.tempoPreparo = produtoDto.tempoPreparo();
 		this.imagem 	  = produtoDto.imagem();
 	}		
+
+	public void atualizar(ProdutoDto produtoDto) {
+		this.categoria 	  = produtoDto.categoria();
+		this.nome 	   	  = produtoDto.nome();
+		this.descricao 	  = produtoDto.descricao();
+		this.preco 	      = produtoDto.preco();
+		this.tempoPreparo = produtoDto.tempoPreparo();
+		this.imagem 	  = produtoDto.imagem();
+	}			
 }
