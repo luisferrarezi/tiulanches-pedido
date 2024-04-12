@@ -81,4 +81,8 @@ public class Pedido {
 			this.cliente = new Cliente(dto.cpf(), dto.nome(), dto.email(), Logado.NAO);
 		}
 	}
+
+	public void alteraStatus(StatusPedido status){
+		this.status = status;
+	}
 }

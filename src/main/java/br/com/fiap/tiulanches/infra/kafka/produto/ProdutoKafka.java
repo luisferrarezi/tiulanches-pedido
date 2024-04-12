@@ -18,7 +18,7 @@ public class ProdutoKafka implements ProdutoListener {
 	}
     
     @Override    
-    @KafkaListener(topics = "topico-produto-pedido", groupId = "grupo-produto-pedido")
+    @KafkaListener(topics = "topico-produto-pedido", groupId = "grupo-pedido")
     public void processaMensagem(ProdutoEvent produtoEvent) {
         switch (produtoEvent.getEvento()){
             case EventoEnum.CREATE: 
