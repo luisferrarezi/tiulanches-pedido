@@ -84,5 +84,5 @@ public class Pedido {
 
 	public void alteraStatus(StatusPedido status){
 		this.status = status;
-	}
+	}	
 }

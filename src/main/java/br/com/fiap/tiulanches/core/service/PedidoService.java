@@ -115,4 +115,11 @@ public class PedidoService implements PedidoController {
 		pedido.alteraStatus(dto.status());
 		pedidoRepository.save(pedido);
 	}
+
+	public void preparar(Long id){
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		
+		pedido.alteraStatus(StatusPedido.PREPARACAO);
+		pedidoRepository.save(pedido);
+	}	
 }

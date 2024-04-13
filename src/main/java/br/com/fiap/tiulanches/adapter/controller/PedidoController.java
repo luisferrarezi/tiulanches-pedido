@@ -16,4 +16,5 @@ public interface PedidoController {
 	public PedidoDto cadastrar(PedidoDto dto);
 	public List<PainelPedidoDto> consultaPainelPedido();
 	public void atualizaStatus(PedidoDto dto);
+	public void preparar(Long id);
 }
