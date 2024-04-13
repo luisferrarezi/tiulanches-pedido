@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.fiap.tiulanches.adapter.controller.PedidoController;
+import br.com.fiap.tiulanches.adapter.message.EventoEnum;
+import br.com.fiap.tiulanches.adapter.message.pedido.PedidoMessage;
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteRepository;
 import br.com.fiap.tiulanches.adapter.repository.painelpedido.PainelPedidoDto;
 import br.com.fiap.tiulanches.adapter.repository.painelpedido.PainelPedidoRepository;
@@ -33,13 +35,16 @@ public class PedidoService implements PedidoController {
 	private final ProdutoRepository produtoRepository;
 	private final ClienteRepository clienteRepository;
 	private final PainelPedidoRepository painelPedidoRepository;
+	private final PedidoMessage pedidoMessage;
 	
 	public PedidoService(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, 
-						 ClienteRepository clienteRepository, PainelPedidoRepository painelPedidoRepository) {
+						 ClienteRepository clienteRepository, PainelPedidoRepository painelPedidoRepository,
+						 PedidoMessage pedidoMessage) {
 		this.clienteRepository = clienteRepository;
 		this.pedidoRepository = pedidoRepository;
 		this.produtoRepository = produtoRepository;
 		this.painelPedidoRepository = painelPedidoRepository;
+		this.pedidoMessage = pedidoMessage;
 	}
 	
 	public Page<PedidoDto> consultaPaginada(Pageable paginacao){
@@ -49,11 +54,11 @@ public class PedidoService implements PedidoController {
 	public List<PedidoDto> consultaByStatus(StatusPedido status){
 		List<Pedido> listPedido = pedidoRepository.findByStatus(status);
 		
-		return listPedido.stream().map(pedido -> new PedidoDto(pedido)).collect(Collectors.toList());
+		return listPedido.stream().map(PedidoDto::new).collect(Collectors.toList());
 	}	
 	
 	public PedidoDto detalhar(Long id) {
-		Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         return new PedidoDto(pedido);
     }
@@ -63,10 +68,10 @@ public class PedidoService implements PedidoController {
 		pedido.cadastrar(dto);
 		
 		if (dto.cliente() != null) {
-			Cliente cliente = clienteRepository.findById(dto.cliente().cpf()).orElseThrow(() -> new EntityNotFoundException());
+			Cliente cliente = clienteRepository.findById(dto.cliente().cpf()).orElseThrow(EntityNotFoundException::new);
 
 			if (!cliente.isLogado()){
-				throw new BusinessException("Cliente não logado na aplicação!", HttpStatus.UNAUTHORIZED, new String("Cliente"));
+				throw new BusinessException("Cliente não logado na aplicação!", HttpStatus.UNAUTHORIZED, "Cliente");
 			}
 
 			pedido.setCliente(cliente);
@@ -76,7 +81,7 @@ public class PedidoService implements PedidoController {
 		List<ItemPedido> listItemPedido = mapper.convertValue(dto.listItemPedido(), new TypeReference<List<ItemPedido>>() {});
 		
 		for (ItemPedido itemPedido : listItemPedido) {
-			Produto produto = produtoRepository.findById(itemPedido.getProduto().getIdProduto()).orElseThrow(() -> new EntityNotFoundException());
+			Produto produto = produtoRepository.findById(itemPedido.getProduto().getIdProduto()).orElseThrow(EntityNotFoundException::new);
 			itemPedido.setProduto(produto);
 			itemPedido.setPrecoUnitario(produto.getPreco());
 			
@@ -84,8 +89,10 @@ public class PedidoService implements PedidoController {
 		}		
 		
 		pedidoRepository.save(pedido);		
-		
-		return new PedidoDto(pedido);
+		PedidoDto pedidoDto = new PedidoDto(pedido);
+		pedidoMessage.enviaMensagem(EventoEnum.CREATE, pedidoDto);
+
+		return pedidoDto;
 	}
 
 	public List<PainelPedidoDto> consultaPainelPedido() {
@@ -94,11 +101,25 @@ public class PedidoService implements PedidoController {
 				 																	      	  StatusPedido.PREPARACAO.ordinal(), 
 				 														      	  			  StatusPedido.PRONTO.ordinal());
 		
-			return listPainelPedido.stream().map(painelPedido -> new PainelPedidoDto(painelPedido)).collect(Collectors.toList());
+			return listPainelPedido.stream().map(PainelPedidoDto::new).collect(Collectors.toList());
 		}
 		catch(Exception e) {
 			throw new EntityNotFoundException();		
 			
 		} 
+	}
+
+	@Override
+	public void atualizaStatus(PedidoDto dto) {
+		Pedido pedido = pedidoRepository.findById(dto.idPedido()).orElseThrow(EntityNotFoundException::new);
+		pedido.alteraStatus(dto.status());
+		pedidoRepository.save(pedido);
+	}
+
+	public void preparar(Long id){
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		
+		pedido.alteraStatus(StatusPedido.PREPARACAO);
+		pedidoRepository.save(pedido);
 	}	
 }

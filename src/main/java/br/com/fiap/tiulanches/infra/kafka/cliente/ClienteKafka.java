@@ -18,7 +18,7 @@ public class ClienteKafka implements ClienteListener {
 	}
     
     @Override    
-    @KafkaListener(topics = "topico-cliente-pedido", groupId = "grupo-cliente-pedido")
+    @KafkaListener(topics = "topico-cliente-pedido", groupId = "grupo-pedido")
     public void processaMensagem(ClienteEvent clienteEvent) {
         switch (clienteEvent.getEvento()){
             case EventoEnum.CREATE: 
