@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.tiulanches.adapter.repository.produto.ProdutoDto;
 import br.com.fiap.tiulanches.adapter.controller.ProdutoController;
-import br.com.fiap.tiulanches.core.entitie.produto.Produto;
 import br.com.fiap.tiulanches.adapter.repository.produto.ProdutoRepository;
+import br.com.fiap.tiulanches.core.entity.produto.Produto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 

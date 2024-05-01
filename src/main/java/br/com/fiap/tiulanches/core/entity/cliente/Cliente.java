@@ -1,4 +1,4 @@
-package br.com.fiap.tiulanches.core.entitie.cliente;
+package br.com.fiap.tiulanches.core.entity.cliente;
 
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanches.core.enums.Logado;
