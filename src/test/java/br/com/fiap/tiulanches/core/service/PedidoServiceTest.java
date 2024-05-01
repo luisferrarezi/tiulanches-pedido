@@ -52,7 +52,7 @@ class PedidoServiceTest {
     private PedidoService pedidoService;
     private Optional<Pedido> pedidoTeste;
     private PedidoDto pedidoDtoTeste;
-    private PedidoPadrao pedidoPadrao;        
+    private PedidoPadrao pedidoPadrao;
 
     @Mock
     private PedidoRepository pedidoRepository;
@@ -89,7 +89,6 @@ class PedidoServiceTest {
     @Test
     void testCadastrar() {
         ClientePadrao clientePadrao = new ClientePadrao();
-
         Optional<Cliente> clienteTeste = Optional.ofNullable(clientePadrao.createClient());
 
         when(clienteRepository.findById(anyString())).thenReturn(clienteTeste);
