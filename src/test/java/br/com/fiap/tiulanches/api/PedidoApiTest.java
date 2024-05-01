@@ -35,8 +35,7 @@ import br.com.fiap.tiulanches.utils.pedido.PedidoEnum;
 import br.com.fiap.tiulanches.utils.pedido.PedidoPadrao;
 
 class PedidoApiTest {
-    private MockMvc mockMvc;
-    private PedidoPadrao pedidoPadrao;
+    private MockMvc mockMvc;    
     private PainelPedidoPadrao painelPedidoPadrao;
     private PedidoDto pedidoDto;
     private Utils utils;
@@ -50,6 +49,7 @@ class PedidoApiTest {
 
     @BeforeEach
     void beforeEach(){
+        PedidoPadrao pedidoPadrao;
         utils = new Utils();
         pedidoPadrao = new PedidoPadrao();
         painelPedidoPadrao = new PainelPedidoPadrao();
