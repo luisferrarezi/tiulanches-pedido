@@ -1,10 +1,10 @@
-package br.com.fiap.tiulanches.core.entitie.pedido;
+package br.com.fiap.tiulanches.core.entity.pedido;
 
 import java.util.List;
 
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanches.adapter.repository.pedido.PedidoDto;
-import br.com.fiap.tiulanches.core.entitie.cliente.Cliente;
+import br.com.fiap.tiulanches.core.entity.cliente.Cliente;
 import br.com.fiap.tiulanches.core.enums.Logado;
 import br.com.fiap.tiulanches.core.enums.StatusPedido;
 

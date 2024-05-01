@@ -1,4 +1,4 @@
-package br.com.fiap.tiulanches.core.entitie.painelpedido;
+package br.com.fiap.tiulanches.core.entity.painelpedido;
 
 import br.com.fiap.tiulanches.core.enums.StatusPedido;
 import io.swagger.v3.oas.annotations.media.Schema;
