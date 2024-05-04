@@ -18,9 +18,9 @@ public class ClienteService implements ClienteController {
 	}
 	
 	public void cadastrar(ClienteDto dto){
-		Cliente produto = new Cliente();
-		produto.cadastrar(dto);
-		repository.save(produto);
+		Cliente cliente = new Cliente();
+		cliente.cadastrar(dto);
+		repository.save(cliente);
 	}
 	
 	@Transactional	

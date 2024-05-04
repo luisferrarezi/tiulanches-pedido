@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tlpedido-config
+  labels:
+    app: tlpedido-config
+data:  
+  ds_url: jdbc:mysql://mysql-svc/tlpedidos?&createDatabaseIfNotExist=true
+  ds_username: root
+  conexao_kafka: 10.105.69.241:9092
+---  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tlpedido-deployment
+  labels:
+    app: tlpedido-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tlpedido
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tlpedido
+    spec:      
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+      containers:
+        - name: tlpedido
+          image: luisferrarezi/tlpedido:latest
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1.0"
+          ports:
+            - containerPort: 8081
+              name: tlpedido-port
+          env:
+            - name: DATASOURCE_URL   
+              valueFrom :
+                configMapKeyRef :
+                  name : tlpedido-config
+                  key :  ds_url
+
+            - name: CONEXAO_KAFKA
+              valueFrom :
+                configMapKeyRef :
+                  name : tlpedido-config
+                  key : conexao_kafka
+
+            - name: DATASOURCE_PASSWORD  
+              valueFrom :
+                secretKeyRef :
+                  name : app-secrets
+                  key :  ds_pass
+
+            - name: DATASOURCE_USERNAME
+              valueFrom :
+                configMapKeyRef :
+                  name : db-config
+                  key :  ds_username
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: tlpedido-port
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: tlpedido-port
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tlpedido-svc
+spec:
+  selector:
+    app: tlpedido
+  ports:
+    - protocol: TCP
+      port: 8081       
+      nodePort: 31300
+  type: NodePort
