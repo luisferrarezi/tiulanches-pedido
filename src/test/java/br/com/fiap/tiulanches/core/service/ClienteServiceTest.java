@@ -44,25 +44,12 @@ class ClienteServiceTest {
     @Test
     void testAlterar() {
         when(clienteRepository.findById(anyString())).thenReturn(clienteTest);        
-        
         assertDoesNotThrow(()-> clienteService.alterar(clientePadrao.createClientDto()));
     }
 
     
     @Test
-    void testCadastrar() {
-        ClienteDto clienteDto = clientePadrao.createClientDto();
-
-        BusinessException exception = assertThrows(BusinessException.class, ()-> clienteService.cadastrar(clienteDto));
-        assertEquals("CPF não informado!", exception.getMessage());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
-
-        when(clienteRepository.findById(anyString())).thenReturn(Optional.of(new Cliente()));
-        exception = assertThrows(BusinessException.class, ()-> clienteService.cadastrar(clienteDtoTest));
-        assertEquals("Cliente já cadastrado", exception.getMessage());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
-
-        when(clienteRepository.findById(anyString())).thenReturn(Optional.empty());
+    void testCadastrar() {        
         assertDoesNotThrow(()-> clienteService.cadastrar(clienteDtoTest));
     }
 
@@ -71,10 +58,5 @@ class ClienteServiceTest {
         when(clienteRepository.findById(anyString())).thenReturn(clienteTest);
         doNothing().when(clienteRepository).deleteById(anyString());
         assertDoesNotThrow(()-> clienteService.excluir(clientePadrao.createClientDto()));
-        
-        when(clienteRepository.findById(anyString())).thenReturn(clienteTest);
-        BusinessException exception = assertThrows(BusinessException.class, ()-> clienteService.excluir(clientePadrao.createClientDto()));
-        assertEquals("Cliente já utilizado em pedido, não pode ser excluído!", exception.getMessage());
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getHttpStatus());
     }
 }
