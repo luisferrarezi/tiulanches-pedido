@@ -1,8 +1,6 @@
 package br.com.fiap.tiulanches.core.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -13,12 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteDto;
 import br.com.fiap.tiulanches.adapter.repository.cliente.ClienteRepository;
 import br.com.fiap.tiulanches.core.entity.cliente.Cliente;
-import br.com.fiap.tiulanches.core.exception.BusinessException;
 import br.com.fiap.tiulanches.utils.cliente.ClientePadrao;
 
 class ClienteServiceTest {    
