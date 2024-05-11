@@ -47,21 +47,7 @@ spec:
               valueFrom :
                 configMapKeyRef :
                   name : tlpedido-config
-                  key : conexao_kafka                  
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: tlpedido-port
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: tlpedido-port
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            failureThreshold: 3
+                  key : conexao_kafka
 ---
 apiVersion: v1
 kind: Service
@@ -71,6 +57,24 @@ spec:
   selector:
     app: tlpedido
   ports:
-    - port: 8081
-      targetPort: 8081
-  type: LoadBalancer
+  - port: 81
+    targetPort: 8081
+    protocol: TCP
+    name: http
+---    
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tlpedido-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /pedidos
+        backend:
+          service:
+            name: tlpedido-svc
+            port: 
+              number: 81
