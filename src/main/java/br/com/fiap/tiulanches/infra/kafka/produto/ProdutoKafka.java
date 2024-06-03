@@ -1,14 +1,14 @@
 package br.com.fiap.tiulanches.infra.kafka.produto;
 
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import br.com.fiap.tiulanches.adapter.controller.ProdutoController;
 import br.com.fiap.tiulanches.adapter.message.EventoEnum;
 import br.com.fiap.tiulanches.adapter.message.produto.ProdutoEvent;
 import br.com.fiap.tiulanches.adapter.message.produto.ProdutoListener;
 
-@Service
+@Component
 public class ProdutoKafka implements ProdutoListener {
     
 	private final ProdutoController controller; 	

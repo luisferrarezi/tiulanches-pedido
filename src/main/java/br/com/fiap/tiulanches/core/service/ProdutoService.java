@@ -17,6 +17,7 @@ public class ProdutoService implements ProdutoController {
 		this.repository = repository;
 	}
 	
+	@Transactional		
 	public void cadastrar(ProdutoDto dto){
 		Produto produto = new Produto();
 		produto.cadastrar(dto);
@@ -29,6 +30,7 @@ public class ProdutoService implements ProdutoController {
 		produto.atualizar(dto);
 	}	
 	
+	@Transactional		
 	public void excluir(ProdutoDto dto){
 		Produto produto = repository.findById(dto.idProduto()).orElseThrow(EntityNotFoundException::new);
 		

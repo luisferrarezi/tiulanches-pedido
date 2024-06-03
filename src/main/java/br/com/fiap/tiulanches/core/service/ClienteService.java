@@ -17,18 +17,20 @@ public class ClienteService implements ClienteController {
 		this.repository = repository;
 	}
 	
+	@Transactional
 	public void cadastrar(ClienteDto dto){
 		Cliente cliente = new Cliente();
 		cliente.cadastrar(dto);
 		repository.save(cliente);
 	}
 	
-	@Transactional	
+	@Transactional
 	public void alterar(ClienteDto dto){
 		Cliente cliente = repository.findById(dto.cpf()).orElseThrow(EntityNotFoundException::new);
 		cliente.atualizar(dto);
 	}	
 	
+	@Transactional
 	public void excluir(ClienteDto dto){
 		Cliente cliente = repository.findById(dto.cpf()).orElseThrow(EntityNotFoundException::new);
 		

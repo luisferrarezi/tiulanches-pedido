@@ -1,14 +1,14 @@
 package br.com.fiap.tiulanches.infra.kafka.pedido;
 
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import br.com.fiap.tiulanches.adapter.message.EventoEnum;
 import br.com.fiap.tiulanches.adapter.message.pedido.PedidoEvent;
 import br.com.fiap.tiulanches.adapter.message.pedido.PedidoMessage;
 import br.com.fiap.tiulanches.adapter.repository.pedido.PedidoDto;
 
-@Service
+@Component
 public class EnviaPedido implements PedidoMessage {
 
     private final KafkaTemplate<String, Object> kafka;
