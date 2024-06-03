@@ -1,14 +1,14 @@
 package br.com.fiap.tiulanches.infra.kafka.cliente;
 
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import br.com.fiap.tiulanches.adapter.controller.ClienteController;
 import br.com.fiap.tiulanches.adapter.message.EventoEnum;
 import br.com.fiap.tiulanches.adapter.message.cliente.ClienteEvent;
 import br.com.fiap.tiulanches.adapter.message.cliente.ClienteListener;
 
-@Service
+@Component
 public class ClienteKafka implements ClienteListener {
     
 	private final ClienteController controller; 	

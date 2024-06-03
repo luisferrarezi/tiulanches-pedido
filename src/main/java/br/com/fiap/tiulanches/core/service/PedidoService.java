@@ -28,6 +28,7 @@ import br.com.fiap.tiulanches.core.entity.produto.Produto;
 import br.com.fiap.tiulanches.core.enums.StatusPedido;
 import br.com.fiap.tiulanches.core.exception.BusinessException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PedidoService implements PedidoController {
@@ -63,6 +64,7 @@ public class PedidoService implements PedidoController {
         return new PedidoDto(pedido);
     }
 	
+	@Transactional		
 	public PedidoDto cadastrar(PedidoDto dto){
 		Pedido pedido = new Pedido();
 		pedido.cadastrar(dto);
@@ -110,12 +112,14 @@ public class PedidoService implements PedidoController {
 	}
 
 	@Override
+	@Transactional	
 	public void atualizaStatus(PedidoDto dto) {
 		Pedido pedido = pedidoRepository.findById(dto.idPedido()).orElseThrow(EntityNotFoundException::new);
 		pedido.alteraStatus(dto.status());
 		pedidoRepository.save(pedido);
 	}
 
+	@Transactional	
 	public void preparar(Long id){
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 		
