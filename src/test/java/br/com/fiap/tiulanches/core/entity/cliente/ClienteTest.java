@@ -66,7 +66,14 @@ class ClienteTest {
         cliente = new Cliente(ClienteEnum.CPF.getValor(), 
                               ClienteEnum.NOME.getValor(), 
                               ClienteEnum.EMAIL.getValor(), 
-                              Logado.SIM);
+                              Logado.SIM,
+                              ClienteEnum.ENDERECO.getValor(),
+                              ClienteEnum.NUMERO.getValor(),
+                              ClienteEnum.BAIRRO.getValor(),
+                              ClienteEnum.CIDADE.getValor(),
+                              ClienteEnum.ESTADO.getValor(),
+                              ClienteEnum.CEP.getValor(),
+                              ClienteEnum.TELEFONE.getValor());
 
         assertTrue(cliente.isLogado());
     }
@@ -100,7 +107,7 @@ class ClienteTest {
     
     @Test
     void clienteAtualizarNullTest(){
-        ClienteDto clienteDto = new ClienteDto(ClienteEnum.NOME.getValor(), null, null);
+        ClienteDto clienteDto = new ClienteDto(ClienteEnum.NOME.getValor(), null, null, null, null, null, null, null, null, null);
 
         cliente = new Cliente();
         cliente.atualizar(clienteDto);

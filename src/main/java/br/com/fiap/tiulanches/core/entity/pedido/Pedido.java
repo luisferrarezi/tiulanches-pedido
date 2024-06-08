@@ -78,7 +78,8 @@ public class Pedido {
 	
 	private void validaCliente(ClienteDto dto) {		
 		if (dto != null) {
-			this.cliente = new Cliente(dto.cpf(), dto.nome(), dto.email(), Logado.NAO);
+			this.cliente = new Cliente(dto.cpf(), dto.nome(), dto.email(), Logado.NAO, dto.endereco(), dto.numero(),
+								       dto.bairro(), dto.cidade(), dto.estado(), dto.cep(), dto.telefone());
 		}
 	}
 

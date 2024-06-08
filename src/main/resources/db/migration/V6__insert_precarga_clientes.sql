@@ -1,2 +1,2 @@
-INSERT INTO tlpedidos.clientes (cpf, nome, email, logado)
-	                    values ('06490645009', 'teste', 'teste@gmail.com', 1)
+INSERT INTO tlpedidos.clientes (cpf, nome, email, logado, endereco, numero, bairro, cidade, estado, cep, telefone)
+	                    values ('06490645009', 'teste', 'teste@gmail.com', 1, 'qualquer rua', '123', 'qualquer', 'sao paulo', 'SP', '12345-000', '(11) 99999-9999')
