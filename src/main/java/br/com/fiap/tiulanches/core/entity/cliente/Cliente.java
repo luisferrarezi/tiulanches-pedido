@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -40,19 +41,68 @@ public class Cliente {
 	@Schema(implementation = Logado.class, description = "Define se o cliente está logado na aplicação", example = "SIM", required = true)	
 	private Logado logado;
 
+	@NotBlank
+	@Size(max=100)
+	@Schema(description = "Endereço do cliente", example = "Rua Augustina", required = true, maxLength = 100)
+	private String endereco;
+
+	@NotBlank
+	@Size(max=10)
+	@Schema(description = "Número endereço do Cliente", example = "1234", required = true, maxLength = 10)
+	private String numero;
+
+	@NotBlank
+	@Size(max=100)
+	@Schema(description = "Bairro do cliente", example = "Santa Luzia", required = true, maxLength = 100)
+	private String bairro;
+
+	@NotBlank
+	@Size(max=100)
+	@Schema(description = "Cidade do cliente", example = "Potirendaba", required = true, maxLength = 100)
+	private String cidade;
+
+	@NotBlank
+	@Size(max=2)
+	@Schema(description = "Estado cidade do cliente", example = "SP", required = true, maxLength = 2)
+	private String estado;
+
+	@NotBlank
+	@Size(max=9)
+	@Schema(description = "CEP do cliente", example = "11111-000", required = true, maxLength = 9)
+	private String cep;
+
+	@NotBlank
+	@Size(max=15)
+	@Schema(description = "Telefone do cliente", example = "(11) 99999-9999", required = true, maxLength = 15)
+	private String telefone;
+
 	public boolean isLogado(){
 		return this.logado == Logado.SIM;
 	}
 
 	public void cadastrar(ClienteDto clienteDto) {
-		this.cpf 	= clienteDto.cpf();
-		this.email 	= clienteDto.email();
-		this.nome 	= clienteDto.nome();
-		this.logado = Logado.NAO;		
+		this.cpf 	  = clienteDto.cpf();
+		this.email 	  = clienteDto.email();
+		this.nome 	  = clienteDto.nome();
+		this.endereco = clienteDto.endereco();
+		this.numero   = clienteDto.numero();
+		this.bairro   = clienteDto.bairro();
+		this.cidade   = clienteDto.cidade();
+		this.estado   = clienteDto.estado();
+		this.cep 	  = clienteDto.cep();
+		this.telefone = clienteDto.telefone();
+		this.logado   = Logado.NAO;		
 	}		
 
 	public void atualizar(ClienteDto clienteDto) {
-		this.email 	= clienteDto.email();
-		this.nome 	= clienteDto.nome();
+		this.email 	  = clienteDto.email();
+		this.nome 	  = clienteDto.nome();
+		this.endereco = clienteDto.endereco();
+		this.numero   = clienteDto.numero();
+		this.bairro   = clienteDto.bairro();
+		this.cidade   = clienteDto.cidade();
+		this.estado   = clienteDto.estado();
+		this.cep 	  = clienteDto.cep();
+		this.telefone = clienteDto.telefone();
 	}				
 }

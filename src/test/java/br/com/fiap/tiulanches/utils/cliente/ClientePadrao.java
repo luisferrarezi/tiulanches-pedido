@@ -10,12 +10,26 @@ public class ClientePadrao {
         return new Cliente(ClienteEnum.CPF.getValor(), 
                            ClienteEnum.NOME.getValor(), 
                            ClienteEnum.EMAIL.getValor(), 
-                           Logado.NAO);
+                           Logado.NAO,
+                           ClienteEnum.ENDERECO.getValor(),
+                           ClienteEnum.NUMERO.getValor(),
+                           ClienteEnum.BAIRRO.getValor(),
+                           ClienteEnum.CIDADE.getValor(),
+                           ClienteEnum.ESTADO.getValor(),
+                           ClienteEnum.CEP.getValor(),
+                           ClienteEnum.TELEFONE.getValor());
     }
 
     public ClienteDto createClientDto(){
         return new ClienteDto(ClienteEnum.CPF.getValor(), 
                               ClienteEnum.NOME.getValor(), 
-                              ClienteEnum.EMAIL.getValor());
+                              ClienteEnum.EMAIL.getValor(),
+                              ClienteEnum.ENDERECO.getValor(),
+                              ClienteEnum.NUMERO.getValor(),
+                              ClienteEnum.BAIRRO.getValor(),
+                              ClienteEnum.CIDADE.getValor(),
+                              ClienteEnum.ESTADO.getValor(),
+                              ClienteEnum.CEP.getValor(),
+                              ClienteEnum.TELEFONE.getValor());
     }
 }
