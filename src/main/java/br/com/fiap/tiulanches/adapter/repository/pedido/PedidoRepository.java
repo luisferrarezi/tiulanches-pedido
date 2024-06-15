@@ -11,7 +11,7 @@ import br.com.fiap.tiulanches.core.enums.StatusPedido;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 	@Query(value = "SELECT pe.* " + 
-                   "  FROM pedidos pe " +
+                   "  FROM tlpedidos.pedidos pe " +
                    " WHERE pe.status = :#{#status?.ordinal()} ", nativeQuery = true)
 	List<Pedido> findByStatus(@Param("status") StatusPedido status);
 }

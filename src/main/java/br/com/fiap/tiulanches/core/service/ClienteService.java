@@ -34,6 +34,7 @@ public class ClienteService implements ClienteController {
 	public void excluir(ClienteDto dto){
 		Cliente cliente = repository.findById(dto.cpf()).orElseThrow(EntityNotFoundException::new);
 		
+		repository.apagaClientePedidosLGPD(cliente.getCpf());
 		repository.deleteById(cliente.getCpf());
 	}	
 }
