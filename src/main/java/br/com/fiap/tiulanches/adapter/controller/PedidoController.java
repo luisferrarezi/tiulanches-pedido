@@ -17,4 +17,5 @@ public interface PedidoController {
 	public List<PainelPedidoDto> consultaPainelPedido();
 	public void atualizaStatus(PedidoDto dto);
 	public void preparar(Long id);
+	public void cancelaPedidoNaoPago(Long id);
 }

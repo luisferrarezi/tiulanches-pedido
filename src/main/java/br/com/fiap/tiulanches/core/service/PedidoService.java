@@ -125,5 +125,13 @@ public class PedidoService implements PedidoController {
 		
 		pedido.alteraStatus(StatusPedido.PREPARACAO);
 		pedidoRepository.save(pedido);
+	}
+
+	@Override
+	public void cancelaPedidoNaoPago(Long id) {
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		
+		pedido.alteraStatus(StatusPedido.CANCELADO);
+		pedidoRepository.save(pedido);
 	}	
 }
