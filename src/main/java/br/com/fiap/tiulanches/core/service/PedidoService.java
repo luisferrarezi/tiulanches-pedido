@@ -128,6 +128,7 @@ public class PedidoService implements PedidoController {
 	}
 
 	@Override
+	@Transactional
 	public void cancelaPedidoNaoPago(Long id) {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 		

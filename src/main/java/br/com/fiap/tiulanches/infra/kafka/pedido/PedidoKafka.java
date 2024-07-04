@@ -4,7 +4,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.tiulanches.adapter.controller.PedidoController;
-import br.com.fiap.tiulanches.adapter.message.pagamento.PagamentoEvent;
 import br.com.fiap.tiulanches.adapter.message.pedido.PedidoEvent;
 import br.com.fiap.tiulanches.adapter.message.pedido.PedidoListener;
 
@@ -21,11 +20,5 @@ public class PedidoKafka implements PedidoListener {
     @KafkaListener(topics = "topico-producao-status-pedido", groupId = "grupo-pedido")
     public void processaStatusMensagem(PedidoEvent pedidoEvent) {
         pedidoController.atualizaStatus(pedidoEvent.getPedidoDto());
-    }
-   
-    @Override
-    @KafkaListener(topics = "topico-pagamento-pedido", groupId = "grupo-pedido")
-    public void processaPagamentoMensagem(PagamentoEvent pagamentoEvent) {
-        pedidoController.cancelaPedidoNaoPago(pagamentoEvent.getIdPedido());
     }
 }
