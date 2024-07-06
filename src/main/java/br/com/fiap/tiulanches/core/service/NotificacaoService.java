@@ -19,10 +19,13 @@ public class NotificacaoService implements NotificacaoController {
     @Override
     @Transactional
     public void notificar(long idPedido, String mensagem) {
-        Notificacao notificacao = new Notificacao();
-        notificacao.setIdPedido(idPedido);
-        notificacao.setMensagem(mensagem);
+        
+        if (notificacaoRepository.geNotificacaoPedido(idPedido) == 0){
+            Notificacao notificacao = new Notificacao();
+            notificacao.setIdPedido(idPedido);
+            notificacao.setMensagem(mensagem);
 
-        notificacaoRepository.save(notificacao);
+            notificacaoRepository.save(notificacao);
+        }
     }
 }

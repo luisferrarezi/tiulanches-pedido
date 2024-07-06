@@ -91,8 +91,8 @@ public class PedidoService implements PedidoController {
 		}		
 		
 		pedidoRepository.save(pedido);		
-		PedidoDto pedidoDto = new PedidoDto(pedido);
-		pedidoMessage.enviaMensagem(EventoEnum.CREATE, pedidoDto);
+		PedidoDto pedidoDto = new PedidoDto(pedido);		
+		pedidoMessage.enviaPedidoMensagem(EventoEnum.CREATE, pedidoDto);
 
 		return pedidoDto;
 	}
@@ -125,6 +125,9 @@ public class PedidoService implements PedidoController {
 		
 		pedido.alteraStatus(StatusPedido.PREPARACAO);
 		pedidoRepository.save(pedido);
+		
+		PedidoDto pedidoDto = new PedidoDto(pedido);		
+		pedidoMessage.enviaMensagem(EventoEnum.CREATE, pedidoDto);
 	}
 
 	@Override

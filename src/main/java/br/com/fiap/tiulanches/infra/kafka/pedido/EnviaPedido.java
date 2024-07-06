@@ -22,5 +22,12 @@ public class EnviaPedido implements PedidoMessage {
         PedidoEvent pedidoEvent = new PedidoEvent(evento, pedido);
         
         kafka.send("topico-pedido-producao", pedidoEvent);
+    }
+
+    @Override
+    public void enviaPedidoMensagem(EventoEnum evento, PedidoDto pedido) {
+        PedidoEvent pedidoEvent = new PedidoEvent(evento, pedido);
+        
+        kafka.send("topico-pedido-pagamento", pedidoEvent);
     }    
 }
