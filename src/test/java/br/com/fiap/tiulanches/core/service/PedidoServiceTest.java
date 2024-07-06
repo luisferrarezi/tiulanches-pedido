@@ -172,4 +172,12 @@ class PedidoServiceTest {
         assertEquals(StatusPedido.RECEBIDO, pedidoDto.status());
         assertEquals(1, pedidoDto.listItemPedido().size());
     }    
+
+    @Test
+    void testCancelaPedidoNaoPago() {
+        when(pedidoRepository.findById(anyLong())).thenReturn(pedidoTeste);       
+        when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedidoPadrao.createPedido());
+        
+        assertDoesNotThrow(()-> pedidoService.cancelaPedidoNaoPago((Long) PedidoEnum.ID_PEDIDO.getValor()));
+    }        
 }

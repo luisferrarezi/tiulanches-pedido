@@ -2,7 +2,6 @@ package br.com.fiap.tiulanches.infra.kafka.pedido;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 
 import org.junit.jupiter.api.AfterEach;
@@ -43,16 +42,9 @@ class PedidoKafkaTest {
 
         pedidoEvent.setEvento(EventoEnum.CREATE);
         doNothing().when(controller).atualizaStatus(any(PedidoDto.class));
-        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent, "topico-producao-status-pedido"));
+        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent));
 
         pedidoEvent.setEvento(EventoEnum.UPDATE);        
-        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent, "topico-producao-status-pedido"));
-
-        pedidoEvent.setEvento(EventoEnum.UPDATE);
-        doNothing().when(controller).preparar(anyLong());
-        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent, "topico-pagamento-pedido"));
-
-        pedidoEvent.setEvento(EventoEnum.CREATE);
-        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent, "topico-pagamento-pedido"));        
+        assertDoesNotThrow(()->pedidoKafka.processaStatusMensagem(pedidoEvent));
     }
 }

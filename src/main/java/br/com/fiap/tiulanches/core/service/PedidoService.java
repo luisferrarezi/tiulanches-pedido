@@ -91,8 +91,8 @@ public class PedidoService implements PedidoController {
 		}		
 		
 		pedidoRepository.save(pedido);		
-		PedidoDto pedidoDto = new PedidoDto(pedido);
-		pedidoMessage.enviaMensagem(EventoEnum.CREATE, pedidoDto);
+		PedidoDto pedidoDto = new PedidoDto(pedido);		
+		pedidoMessage.enviaPedidoMensagem(EventoEnum.CREATE, pedidoDto);
 
 		return pedidoDto;
 	}
@@ -124,6 +124,18 @@ public class PedidoService implements PedidoController {
 		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 		
 		pedido.alteraStatus(StatusPedido.PREPARACAO);
+		pedidoRepository.save(pedido);
+		
+		PedidoDto pedidoDto = new PedidoDto(pedido);		
+		pedidoMessage.enviaMensagem(EventoEnum.CREATE, pedidoDto);
+	}
+
+	@Override
+	@Transactional
+	public void cancelaPedidoNaoPago(Long id) {
+		Pedido pedido = pedidoRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		
+		pedido.alteraStatus(StatusPedido.CANCELADO);
 		pedidoRepository.save(pedido);
 	}	
 }
