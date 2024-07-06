@@ -41,11 +41,20 @@ class EnviaPedidoTest {
     }
 
     @Test
-    void enviaStatusMensagemTest(){
+    void enviaMensagemTest(){
         PedidoDto pedidoDto;
         pedidoDto = pedidoPadrao.createPedidoDto();
 
         when(kafka.send(anyString(), any(PedidoEvent.class))).thenReturn(null);
         assertDoesNotThrow(()->enviaPedido.enviaMensagem(EventoEnum.CREATE, pedidoDto));
     }    
+
+    @Test
+    void enviaPedidoMensagemTest(){
+        PedidoDto pedidoDto;
+        pedidoDto = pedidoPadrao.createPedidoDto();
+
+        when(kafka.send(anyString(), any(PedidoEvent.class))).thenReturn(null);
+        assertDoesNotThrow(()->enviaPedido.enviaPedidoMensagem(EventoEnum.CREATE, pedidoDto));
+    }        
 }
